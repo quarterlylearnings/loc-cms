@@ -2,7 +2,23 @@
 export default function AudioUploader() {
     const handleUpload = async (
         event: React.ChangeEvent<HTMLInputElement>
-    ) => {};
+    ) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const options = {
+            method: "POST",
+            body: formData,
+        }
+        const response = await fetch("/tbd", options);
+
+        const data = await response.json();
+        return data
+        
+    };
     return (
         <div className="p-4 max-w-lg bg-white rounded-lg shadow">
             <h1 className="text-xl text-center text-gray-700">
